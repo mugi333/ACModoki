@@ -49,10 +49,13 @@ private:
 	DirectX::SimpleMath::Matrix m_playerWorld;
 	//回転
 	DirectX::SimpleMath::Quaternion m_rotate;
-	
+	//移動ベクトル
+	DirectX::SimpleMath::Vector3 m_moveVector;
 
 	//移動速度
 	const float SPEED = 0.1f;
+	//摩擦
+	static constexpr float FRICTION = 0.9f;
 
 	//ロボットのモデル
 	std::unique_ptr<DirectX::Model> m_robotModel;

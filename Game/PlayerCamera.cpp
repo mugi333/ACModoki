@@ -99,6 +99,37 @@ void PlayerCamera::OnMouseMove(float x, float y)
 
 }
 
+void PlayerCamera::ZAnim(bool isMoveInput)
+{
+	if (isMoveInput)
+	{
+		m_cameraZAnim += CAMERA_Z_SPEED;
+	}
+	else
+	{
+		m_cameraZAnim -= CAMERA_Z_SPEED;
+	}
+
+	//(クランプ処理)
+	if (m_cameraZAnim < 0)
+	{
+		m_cameraZAnim = 0;
+	}
+	if (m_cameraZAnim > 1.0f)
+	{
+		m_cameraZAnim = 1.0f;
+	}
+	DirectX::SimpleMath::Vector3 newOffset;
+
+	//ラープ処理
+	newOffset.z = MIN_CAMERA_DISTANCE + m_cameraZAnim *
+		(MAX_CAMERA_DISTANCE - MIN_CAMERA_DISTANCE);
+
+	m_tpsCamera->SetOffSet(newOffset);
+
+}
+
+
 const DirectX::SimpleMath::Matrix& PlayerCamera::GetViewMatrix() const noexcept
 {
 	return m_tpsCamera->GetViewMatrix();

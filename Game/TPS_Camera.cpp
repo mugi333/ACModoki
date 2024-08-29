@@ -6,7 +6,7 @@
 
 TPS_Camera::TPS_Camera()
 	: m_targetPosition{0.0f,0.0f,0.0f}
-	, m_offsetPos{ 0.0f,0.0f,10.0f }
+	, m_offsetPos{ 0.0f,0.0f,5.0f }
 	, m_roll{ 0.0f,0.0f,0.0f }
 	, m_rollCenterPosition{ 0.0f,0.0f,0.0f }
 	, m_matrix{DirectX::XMMatrixIdentity()}

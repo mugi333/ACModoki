@@ -50,12 +50,21 @@ void Player::Update(float elapsedTime)
 	if (m_camera.IsLockOn())
 	{
 		m_rotate  = 
-			Quaternion::CreateFromYawPitchRoll(0,m_camera.GetRoll().y,0);
+			Quaternion::CreateFromYawPitchRoll(m_camera.GetRoll().y,0,0);
 	}
+	else if(m_moveVector.Length() >= 0.0f )
+	{
+		m_rotate = 
+			Quaternion::CreateFromYawPitchRoll(DirectX::XM_PI-atan2(-m_moveVector.x, m_moveVector.z), 0, 0); 
+	}
+
+	bool isMove = false;
 
 	//ëOêiÅAå„ëﬁ
 	if (kb.W)
 	{
+		isMove = true;
+
 		SimpleMath::Vector3 scale;
 		SimpleMath::Quaternion rotate;
 		SimpleMath::Vector3 newPosition;
@@ -64,10 +73,12 @@ void Player::Update(float elapsedTime)
 			SimpleMath::Matrix::CreateFromYawPitchRoll(m_camera.GetRoll().y, 0.0f, 0.0f)).
 			Decompose(scale, rotate, newPosition);
 
-		m_position += newPosition;
+		m_moveVector += newPosition * SPEED;
 	}
 	if (kb.S)
 	{
+		isMove = true;
+
 		SimpleMath::Vector3 scale;
 		SimpleMath::Quaternion rotate;
 		SimpleMath::Vector3 newPosition;
@@ -76,10 +87,12 @@ void Player::Update(float elapsedTime)
 			SimpleMath::Matrix::CreateFromYawPitchRoll(m_camera.GetRoll().y, 0.0f, 0.0f)).
 			Decompose(scale, rotate, newPosition);
 
-		m_position += newPosition;
+		m_moveVector += newPosition * SPEED;
 	}
 	if (kb.D)
 	{
+		isMove = true;
+
 		SimpleMath::Vector3 scale;
 		SimpleMath::Quaternion rotate;
 		SimpleMath::Vector3 newPosition;
@@ -88,10 +101,12 @@ void Player::Update(float elapsedTime)
 			SimpleMath::Matrix::CreateFromYawPitchRoll(m_camera.GetRoll().y, 0.0f, 0.0f)).
 			Decompose(scale, rotate, newPosition);
 
-		m_position += newPosition;
+		m_moveVector += newPosition*SPEED;
 	}
 	if (kb.A)
 	{
+		isMove = true;
+
 		SimpleMath::Vector3 scale;
 		SimpleMath::Quaternion rotate;
 		SimpleMath::Vector3 newPosition;
@@ -100,24 +115,15 @@ void Player::Update(float elapsedTime)
 			SimpleMath::Matrix::CreateFromYawPitchRoll(m_camera.GetRoll().y, 0.0f, 0.0f)).
 			Decompose(scale, rotate, newPosition);
 
-		m_position += newPosition;
+		m_moveVector += newPosition * SPEED;
 	}
 	
-	
+	//ñÄéC
+	m_moveVector *= FRICTION;
 
+	m_position += m_moveVector;
 
-	////ê˘âÒ
-	//if (kb.Left)
-	//{
-	//	m_rotate *= Quaternion::CreateFromAxisAngle(
-	//		Vector3::UnitY, XMConvertToRadians(5.0f));
-	//}
-	//if (kb.Right)
-	//{
-	//	m_rotate *= Quaternion::CreateFromAxisAngle(
-	//		Vector3::UnitY, XMConvertToRadians(-5.0f));
-	//}
-
+	m_camera.ZAnim(isMove);
 
 	m_camera.SetPlayerPosition(m_position);
 	m_camera.Updata(elapsedTime);
