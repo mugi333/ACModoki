@@ -47,7 +47,11 @@ void Player::Update(float elapsedTime)
 	const auto& kb = m_commonResources->GetInputManager()->GetKeyboardState();
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
-	
+	if (m_camera.IsLockOn())
+	{
+		m_rotate  = 
+			Quaternion::CreateFromYawPitchRoll(0,m_camera.GetRoll().y,0);
+	}
 
 	//前進、後退
 	if (kb.W)
@@ -129,7 +133,8 @@ void Player::Render(
 	auto states = m_commonResources->GetCommonStates();
 
 	// ロボットを移動させる
-	SimpleMath::Matrix m = SimpleMath::Matrix::CreateRotationY(DirectX::XM_PI)*SimpleMath::Matrix::CreateFromQuaternion(m_rotate)
+	SimpleMath::Matrix m = SimpleMath::Matrix::CreateRotationY(DirectX::XM_PI)*
+		SimpleMath::Matrix::CreateFromQuaternion(m_rotate)
 		* SimpleMath::Matrix::CreateTranslation(m_position);
 
 	m_robotModel->Draw(context, *states, m, view, projection,false);

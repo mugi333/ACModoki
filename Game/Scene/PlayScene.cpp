@@ -105,7 +105,10 @@ void PlayScene::Update(float elapsedTime)
 	{
 		m_player->RockOn(m_enemy->GetTransform());
 	}
-
+	//if (kbTracker->pressed.L)
+	//{
+	//
+	//}
 
 	// スペースキーが押されたら
 	if (kbTracker->pressed.P)

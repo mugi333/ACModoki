@@ -23,7 +23,21 @@ public:
 	void SetrollCentPos(const DirectX::SimpleMath::Vector3& position)noexcept { m_rollCenterPosition = position; }
 
 	//カメラの回転の設定
-	void Setroll(const DirectX::SimpleMath::Vector3& roll)noexcept { m_roll = roll; }
+	void Setroll(const DirectX::SimpleMath::Vector3& roll)noexcept 
+	{
+		m_roll = roll; 
+		
+		//角度制限(クランプ処理)
+		if (m_roll.x < -DirectX::XMConvertToRadians(89))
+		{
+			m_roll.x = -DirectX::XMConvertToRadians(89);
+		}
+		if (m_roll.x > DirectX::XMConvertToRadians(89))
+		{
+			m_roll.x = DirectX::XMConvertToRadians(89);
+		}
+
+	}
 
 	//ViewMatrixを渡す const参照を返す 呼び出された際にそのメンバは変更されない,（内部的にも）ポインターを返さないのならつけたほうが良い.
 	// inline 呼び出された所にその関数をコピペするから処理が少し早い

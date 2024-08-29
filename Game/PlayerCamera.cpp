@@ -3,6 +3,7 @@
 #include "TPS_Camera.h"
 #include "Libraries/Ylib/Transform.h"
 #include <iostream>
+
 PlayerCamera::PlayerCamera()
 	: m_playerPotition{0.0f,0.0f,0.0f}
 	, m_rockonAnimationTimer{0.0f}
@@ -38,12 +39,9 @@ void PlayerCamera::Updata(float elapsedTime)
 			DirectX::SimpleMath::Vector3 localEnemyPosition = 
 				m_rockonTarget.lock()->GetPosition() - m_playerPotition;
 
-			//ƒvƒŒƒCƒ„[‚Æ“G‚ÌŠÔ‚ÌŠp“x
-			DirectX::SimpleMath::Vector3 newCameraRotate;
+			m_nowRotate.y = DirectX::XM_PI
+				+ atan2(localEnemyPosition.x, localEnemyPosition.z);
 
-			newCameraRotate.y = -atan2(localEnemyPosition.x, localEnemyPosition.z);
-
-			m_tpsCamera->Setroll(newCameraRotate);
 		}
 	
 		break;
@@ -93,8 +91,8 @@ void PlayerCamera::OnMouseMove(float x, float y)
 		return;
 	}
 
-	m_nowRotate.x += (y - (HEIGHT / 2)) / 1000.0f;
-	m_nowRotate.y += (x - (WIDTH / 2)) / 1000.0f;
+	m_nowRotate.x -= (y - (HEIGHT / 2)) / 1000.0f;
+	m_nowRotate.y -= (x - (WIDTH / 2)) / 1000.0f;
 	
 
 	Input::GetInstance().SetCursolPosition(WIDTH/2, HEIGHT/2);

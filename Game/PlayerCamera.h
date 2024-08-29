@@ -26,6 +26,9 @@ public:
 
 	const DirectX::SimpleMath::Vector3& GetRoll() const noexcept;
 
+	bool IsLockOn()const noexcept {
+		return m_rockonState == RockonState::On && m_rockonState == RockonState::OnAnime; }
+
 private:
 
 	static const int WIDTH = 1280;
@@ -47,6 +50,8 @@ private:
 	RockonState m_rockonState;
 
 	float m_rockonAnimationTimer;
+
+
 
 	std::unique_ptr<TPS_Camera> m_tpsCamera;
 
