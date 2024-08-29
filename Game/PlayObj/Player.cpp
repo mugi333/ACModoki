@@ -59,6 +59,13 @@ void Player::Update(float elapsedTime)
 	}
 
 	bool isMove = false;
+	float QB = 1.0f;
+
+
+	if (kbTracker->pressed.LeftShift)
+	{
+		QB = 100.0f;
+	}
 
 	//ëOêiÅAå„ëﬁ
 	if (kb.W)
@@ -73,7 +80,7 @@ void Player::Update(float elapsedTime)
 			SimpleMath::Matrix::CreateFromYawPitchRoll(m_camera.GetRoll().y, 0.0f, 0.0f)).
 			Decompose(scale, rotate, newPosition);
 
-		m_moveVector += newPosition * SPEED;
+		m_moveVector += newPosition * SPEED *QB;
 	}
 	if (kb.S)
 	{
@@ -87,7 +94,7 @@ void Player::Update(float elapsedTime)
 			SimpleMath::Matrix::CreateFromYawPitchRoll(m_camera.GetRoll().y, 0.0f, 0.0f)).
 			Decompose(scale, rotate, newPosition);
 
-		m_moveVector += newPosition * SPEED;
+		m_moveVector += newPosition * SPEED*QB;
 	}
 	if (kb.D)
 	{
@@ -101,7 +108,7 @@ void Player::Update(float elapsedTime)
 			SimpleMath::Matrix::CreateFromYawPitchRoll(m_camera.GetRoll().y, 0.0f, 0.0f)).
 			Decompose(scale, rotate, newPosition);
 
-		m_moveVector += newPosition*SPEED;
+		m_moveVector += newPosition * SPEED*QB;
 	}
 	if (kb.A)
 	{
@@ -115,7 +122,7 @@ void Player::Update(float elapsedTime)
 			SimpleMath::Matrix::CreateFromYawPitchRoll(m_camera.GetRoll().y, 0.0f, 0.0f)).
 			Decompose(scale, rotate, newPosition);
 
-		m_moveVector += newPosition * SPEED;
+		m_moveVector += newPosition * SPEED*QB;
 	}
 	
 	//ñÄéC

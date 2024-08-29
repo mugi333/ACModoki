@@ -46,8 +46,7 @@ void PlayerCamera::Updata(float elapsedTime)
 			localEnemyPosition.y = 0;
 
 
-			m_nowRotate.x = DirectX::XM_PI
-				+ atan2(localEnemyPosition.Length(), localEnemyPositionY);
+			m_nowRotate.x = atan2(localEnemyPositionY, localEnemyPosition.Length());
 		}
 		{
 			DirectX::SimpleMath::Vector3 offSet;
