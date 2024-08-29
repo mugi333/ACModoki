@@ -42,13 +42,32 @@ void PlayerCamera::Updata(float elapsedTime)
 			m_nowRotate.y = DirectX::XM_PI
 				+ atan2(localEnemyPosition.x, localEnemyPosition.z);
 
+			float localEnemyPositionY = localEnemyPosition.y;
+			localEnemyPosition.y = 0;
+
+
+			m_nowRotate.x = DirectX::XM_PI
+				+ atan2(localEnemyPosition.Length(), localEnemyPositionY);
 		}
+		{
+			DirectX::SimpleMath::Vector3 offSet;
+			offSet = m_tpsCamera->GetOffSet();
+			offSet.x = 1.5f;
+			m_tpsCamera->SetOffSet(offSet);
+		}
+		
 	
 		break;
 	case PlayerCamera::RockonState::Off:
 	
 		m_tpsCamera->SetTargetPosition(m_playerPotition);
-
+		{
+			DirectX::SimpleMath::Vector3 offSet;
+			offSet = m_tpsCamera->GetOffSet();
+			offSet.x = 0.0f;
+			m_tpsCamera->SetOffSet(offSet);
+		}
+		
 		break;
 	case PlayerCamera::RockonState::OnAnime:
 		m_rockonState = RockonState::On;
@@ -73,6 +92,9 @@ void PlayerCamera::RockOn(std::weak_ptr<Transform> transform)
 
 	m_rockonTarget = transform;
 	m_rockonState = RockonState::OnAnime;
+
+
+
 
 }
 

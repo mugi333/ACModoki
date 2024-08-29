@@ -41,11 +41,15 @@ public:
 
 	void SetOffSet(const DirectX::SimpleMath::Vector3& offset) noexcept { m_offsetPos = offset; }
 
+
+	const DirectX::SimpleMath::Vector3& GetOffSet()const noexcept { return m_offsetPos; }
 	//ViewMatrixを渡す const参照を返す 呼び出された際にそのメンバは変更されない,（内部的にも）ポインターを返さないのならつけたほうが良い.
 	// inline 呼び出された所にその関数をコピペするから処理が少し早い
 	const DirectX::SimpleMath::Matrix& GetViewMatrix()const noexcept { return m_matrix; }
 
 	const DirectX::SimpleMath::Vector3& GetRoll() const noexcept { return m_roll; }
+
+
 
 private:
 
